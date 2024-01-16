@@ -7,12 +7,52 @@
 
 import SwiftUI
 
-struct CardView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+typealias Card = SetGame<CardContent>.Card
+typealias matchState = SetGame<CardContent>.MatchingState
 
-#Preview {
-    CardView()
+
+struct CardView: View {
+    private let colors = ["red": Color.red, "green": Color.green, "purple": Color.purple]
+    private let shapes: [String: AnyView] = ["diamond": AnyView(Rectangle()), "squiggle": AnyView(Capsule()), "oval": AnyView(Ellipse())]
+    private let shadings = ["solid", "striped", "open"]
+
+
+    private let selectedColors = [matchState.isMatched: Color.green, matchState.isMisMatched: Color.red, matchState.isNotInMatch: Color.blue]
+    
+    var content: CardContent
+    var card: Card
+    
+    
+    private let shapeAspectRatio: CGFloat = 3.0/2.0
+    var body: some View {
+        let base = RoundedRectangle(cornerRadius: 12)
+        GeometryReader { geometry in
+            ZStack {
+                base.strokeBorder(lineWidth: 3)
+                    .background(base.fill(.white))
+                    .shadow(color: selectedColors[card.matchingState]  ?? .black, radius: card.isSelected ? geometry.size.width * 0.04 : 0)
+                    .overlay(
+                        CardContentView(content: content, card: card, geometry: geometry)
+                    )
+            }
+            
+            .foregroundColor(colors[content.color])
+            
+        }
+    }
+    
+    
+}
+var contentTest = CardContent(color: "red", number: 3, shape: "oval", shading: "solid")
+var cardTest = Card(content: contentTest, isSelected: true, matchingState: matchState.isMisMatched, id: "test")
+
+
+struct CardView_Preivews: PreviewProvider {
+    static var previews: some View {
+    
+     CardView(content: contentTest, card: cardTest)
+        .padding(60)
+        .aspectRatio(2.0/3.0, contentMode: .fit)
+        
+    }
 }

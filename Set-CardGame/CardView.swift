@@ -8,7 +8,6 @@
 import SwiftUI
 
 typealias Card = SetGame<CardContent>.Card
-typealias matchState = SetGame<CardContent>.MatchingState
 
 
 struct CardView: View {
@@ -17,7 +16,7 @@ struct CardView: View {
     private let shadings = ["solid", "striped", "open"]
 
 
-    private let selectedColors = [matchState.isMatched: Color.green, matchState.isMisMatched: Color.red, matchState.isNotInMatch: Color.blue]
+    private let selectedColors = [MatchingState.isMatched: Color.green, MatchingState.isMisMatched: Color.red, MatchingState.isNotInMatch: Color.blue]
     
     var content: CardContent
     var card: Card
@@ -32,7 +31,7 @@ struct CardView: View {
                     .background(base.fill(.white))
                     .shadow(color: selectedColors[card.matchingState]  ?? .black, radius: card.isSelected ? geometry.size.width * 0.04 : 0)
                     .overlay(
-                        CardContentView(content: content, card: card, geometry: geometry)
+                        CardContentView(content: content, num: content.number, card: card, geometry: geometry)
                     )
             }
             
@@ -44,7 +43,7 @@ struct CardView: View {
     
 }
 var contentTest = CardContent(color: "red", number: 3, shape: "oval", shading: "solid")
-var cardTest = Card(content: contentTest, isSelected: true, matchingState: matchState.isMisMatched, id: "test")
+var cardTest = Card(content: contentTest, isSelected: true, matchingState: MatchingState.isMisMatched, id: 0)
 
 
 struct CardView_Preivews: PreviewProvider {

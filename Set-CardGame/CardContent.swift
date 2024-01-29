@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CardContent {
+struct CardContent: Equatable {
     let color: String
     let number: Int
     let shape: String
@@ -43,7 +43,11 @@ struct CardContent {
     
     private func isPropertyMatch<Prop: Equatable>(selfProp: Prop, content1Prop: Prop, content2Prop: Prop) -> Bool {
         if (selfProp == content1Prop && selfProp != content2Prop) ||
-            (selfProp != content1Prop && selfProp == content2Prop) {
+            (selfProp != content1Prop && selfProp == content2Prop) ||
+            (content1Prop != content2Prop && selfProp == content2Prop)  ||
+            (content1Prop == content2Prop && selfProp != content2Prop) ||
+            (content1Prop != content2Prop && selfProp == content1Prop) ||
+            (content1Prop == content2Prop && selfProp != content1Prop) {
             print("Printed false, props being \(selfProp), \(content2Prop), \(content1Prop)")
             return false
         }

@@ -13,14 +13,16 @@ class VanillaSetGame: ObservableObject {
     private static let shadings = ["solid", "striped", "open"]
     
     private static func createSetGame() -> SetGame<CardContent> {
+        var idNum = 0
         var cards: [SetGame<CardContent>.Card] = []
         for color in colors {
             for count in 1...3 {
                 for shape in shapes {
                     for shading in shadings {
                         let content = CardContent(color: color, number: count, shape: shape, shading: shading)
-                        let id = "\(color)\(count)\(shape)\(shading)"
+                        let id = idNum
                         cards.append(SetGame<CardContent>.Card(content: content, id: id))
+                        idNum += 1
                     }
                 }
             }
@@ -40,6 +42,10 @@ class VanillaSetGame: ObservableObject {
     
     var discardDeck: Array<SetGame<CardContent>.Card> {
         return game.discardDeck
+    }
+    
+    var trueDeck: Array<SetGame<CardContent>.Card> {
+        game.backupDeck
     }
     
     func choose(_ card: SetGame<CardContent>.Card){

@@ -7,21 +7,29 @@
 
 import Foundation
 
-struct SetGame<Content> {
-    private var backupDeck: Array<Card> = []
+enum MatchingState {
+    case isMatched
+    case isMisMatched
+    case isNotInMatch
+}
+
+struct SetGame<Content: Equatable> {
+    private(set) var backupDeck: Array<Card> = []
     private(set) var deck: Array<Card> = []
     private(set) var discardDeck: Array<Card> = []
     private(set) var cardsInPlay: Array<Card> = []
     private(set) var selectedCards: Array<Card> = []
-    private(set) var score: Int
+    private(set) var score: Int = 0
     
     init (cards: Array<Card>) {
         self.backupDeck = cards
-        score = 0
-        self.deck = cards
-        //deck.shuffle()
-        for _ in 0..<12 {
-            cardsInPlay.append(deck.remove(at: 0))
+        self.backupDeck.shuffle()
+        newGame()
+    }
+    
+    mutating func setIDs() {
+        for i in 0..<backupDeck.count {
+            backupDeck[i].id = i
         }
     }
     
@@ -79,11 +87,13 @@ struct SetGame<Content> {
     
     mutating func newGame() {
         score = 0
-        self.deck = self.backupDeck
         self.discardDeck.removeAll()
         cardsInPlay.removeAll()
         selectedCards.removeAll()
-        deck.shuffle()
+        backupDeck.shuffle()
+        setIDs()
+        score = 0
+        self.deck = backupDeck
         for _ in 0..<12 {
             cardsInPlay.append(deck.remove(at: 0))
         }
@@ -105,18 +115,18 @@ struct SetGame<Content> {
         }
     }
     
-    struct Card: Identifiable {
+    struct Card: Identifiable, Equatable {
         let content: Content
         var isSelected = false
         var matchingState = MatchingState.isNotInMatch
         
-        var id: String
-        init(content: Content, id: String) {
+        var id: Int
+        init(content: Content, id: Int) {
             self.content = content
             self.id = id
         }
         
-        init(content: Content, isSelected: Bool, matchingState: MatchingState, id: String) {
+        init(content: Content, isSelected: Bool, matchingState: MatchingState, id: Int) {
             self.content = content
             self.matchingState = matchingState
             self.isSelected = isSelected
@@ -124,9 +134,5 @@ struct SetGame<Content> {
         }
     }
     
-    enum MatchingState {
-        case isMatched
-        case isMisMatched
-        case isNotInMatch
-    }
+    
 }

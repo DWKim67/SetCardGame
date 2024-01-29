@@ -50,6 +50,9 @@ struct ContentView: View {
             CardView(content: card.content, card: card)
                 .aspectRatio(cardAspectRatio, contentMode: .fit)
                 .padding(4)
+                .overlay{
+                    MatchIndicator(matchState: card.matchingState)
+                }
                 .onTapGesture {
                     setGame.choose(card)
                 }
@@ -60,7 +63,7 @@ struct ContentView: View {
         var i = 0.0
         return ZStack {
             if (setGame.deck.count > 0) {
-                ForEach(setGame.deck) { card in
+                ForEach(setGame.deck, id: \.self.id) { card in
                     CardView(content: card.content, card:card)
                         .aspectRatio(cardAspectRatio, contentMode: .fit)
                         .offset(y: CGFloat(i))

@@ -17,6 +17,7 @@
 		ED8EE49B2B4C70BA00A2A24F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED8EE49A2B4C70BA00A2A24F /* Preview Assets.xcassets */; };
 		ED8EE4A22B4C720800A2A24F /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8EE4A12B4C720800A2A24F /* AspectVGrid.swift */; };
 		ED9A360B2B51C1EA00AF4133 /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A360A2B51C1EA00AF4133 /* CardContentView.swift */; };
+		EDE6B01D2B67F9D000173F05 /* MatchIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE6B01C2B67F9D000173F05 /* MatchIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		ED8EE49A2B4C70BA00A2A24F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ED8EE4A12B4C720800A2A24F /* AspectVGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AspectVGrid.swift; path = "Set-CardGame/AspectVGrid.swift"; sourceTree = SOURCE_ROOT; };
 		ED9A360A2B51C1EA00AF4133 /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
+		EDE6B01C2B67F9D000173F05 /* MatchIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				ED8571BD2B4D99C2002BCE7D /* VanillaSetGame.swift */,
 				ED8571BF2B4D9F9F002BCE7D /* CardContent.swift */,
 				ED508D592B4EF00000D37DD2 /* CardView.swift */,
+				EDE6B01C2B67F9D000173F05 /* MatchIndicator.swift */,
 				ED9A360A2B51C1EA00AF4133 /* CardContentView.swift */,
 			);
 			path = "Set-CardGame";
@@ -162,6 +165,7 @@
 				ED8EE4942B4C70B900A2A24F /* Set_CardGameApp.swift in Sources */,
 				ED8571C02B4D9F9F002BCE7D /* CardContent.swift in Sources */,
 				ED8571BC2B4D9713002BCE7D /* SetGame.swift in Sources */,
+				EDE6B01D2B67F9D000173F05 /* MatchIndicator.swift in Sources */,
 				ED8EE4A22B4C720800A2A24F /* AspectVGrid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

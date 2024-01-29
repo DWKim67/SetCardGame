@@ -14,9 +14,10 @@ struct CardContentView: View {
     private let shadings = ["solid", "striped", "open"]
 
 
-    private let selectedColors = [matchState.isMatched: Color.green, matchState.isMisMatched: Color.red, matchState.isNotInMatch: Color.blue]
+    private let selectedColors = [MatchingState.isMatched: Color.green, MatchingState.isMisMatched: Color.red, MatchingState.isNotInMatch: Color.blue]
     
     var content: CardContent
+    var num: Int
     var card: Card
     var geometry: GeometryProxy
     
@@ -24,7 +25,7 @@ struct CardContentView: View {
     
     var body: some View {
         LazyVStack{
-            ForEach(0..<content.number) {_ in
+            ForEach(0..<num) {_ in
                 (shapes[content.shape]!)
                     
                     .fill((colors[content.color] ?? .black)
@@ -32,7 +33,7 @@ struct CardContentView: View {
                     .stroke(colors[content.color]!, lineWidth:
                                 (content.shading == "open") ? 2 : 0)
                     .aspectRatio(shapeAspectRatio, contentMode: .fit)
-                    .frame(width: geometry.size.width * 0.8 ,height: geometry.size.height * 0.7 / CGFloat(content.number) )
+                    .frame(width: geometry.size.width * 0.8 ,height: geometry.size.height * 0.7 / CGFloat(num) )
             }
         }
     }
@@ -56,7 +57,7 @@ struct CardContentView: View {
 struct CardContentView_Preivews: PreviewProvider {
     static var previews: some View {
     
-     CardView(content: contentTest, card: cardTest)
+        CardView(content: contentTest, card: cardTest)
         .padding(60)
         .aspectRatio(2.0/3.0, contentMode: .fit)
         

@@ -8,7 +8,7 @@
 import SwiftUI
 
 class VanillaSetGame: ObservableObject {
-    private static let colors = ["red", "green", "purple"]
+    private static let colors = ["blue", "green", "purple"]
     private static let shapes = ["diamond", "squiggle", "oval"]
     private static let shadings = ["solid", "striped", "open"]
     
@@ -68,6 +68,10 @@ class VanillaSetGame: ObservableObject {
         if game.cardsInPlay.count <= 12 {
             game.addCards()
         }
+    }
+    
+    func flipDealtCards() {
+        game.flipDealtCards()
     }
     
     func newGame() {

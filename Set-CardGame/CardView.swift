@@ -11,7 +11,7 @@ typealias Card = SetGame<CardContent>.Card
 
 
 struct CardView: View {
-    private let colors = ["red": Color.red, "green": Color.green, "purple": Color.purple]
+    private let colors = ["blue": Color.blue, "green": Color.green, "purple": Color.purple]
     private let shapes: [String: AnyView] = ["diamond": AnyView(Rectangle()), "squiggle": AnyView(Capsule()), "oval": AnyView(Ellipse())]
     private let shadings = ["solid", "striped", "open"]
 
@@ -27,22 +27,31 @@ struct CardView: View {
         let base = RoundedRectangle(cornerRadius: 12)
         GeometryReader { geometry in
             ZStack {
-                base.strokeBorder(lineWidth: 3)
-                    .background(base.fill(.white))
-                    .shadow(color: selectedColors[card.matchingState]  ?? .black, radius: card.isSelected ? geometry.size.width * 0.04 : 0)
-                    .overlay(
-                        CardContentView(content: content, num: content.number, card: card, geometry: geometry)
-                    )
+                if (card.isFlipped) {
+                    base.strokeBorder(lineWidth: 3)
+                        .background(base.fill(.white))
+                        .shadow(color: selectedColors[card.matchingState]  ?? .black, radius: card.isSelected ? geometry.size.width * 0.04 : 0)
+                        .overlay(
+                            CardContentView(content: content, num: content.number, card: card, geometry: geometry)
+                        )
+                        .foregroundColor(colors[content.color])
+                } else {
+                    base.strokeBorder(lineWidth: 3)
+                        .background(.white)
+                        .foregroundColor(.black)
+                }
             }
             
-            .foregroundColor(colors[content.color])
+
+            
+            
             
         }
     }
     
     
 }
-var contentTest = CardContent(color: "red", number: 3, shape: "oval", shading: "solid")
+var contentTest = CardContent(color: "blue", number: 3, shape: "oval", shading: "solid")
 var cardTest = Card(content: contentTest, isSelected: true, matchingState: MatchingState.isMisMatched, id: 0)
 
 

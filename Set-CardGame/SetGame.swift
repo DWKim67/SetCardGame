@@ -39,7 +39,7 @@ struct SetGame<Content: Equatable> {
             if selectedCards.count >= 3 {
                 if (selectedCards.allSatisfy({ $0.matchingState == .isMatched })) {
                     removeSelectedCards()
-                    addCards()
+                    //addCards()
                 } else {
                     for i in 0..<selectedCards.count {
                         if let chosenIndex = cardsInPlay.firstIndex(where: {$0.id == selectedCards[i].id}) {
@@ -94,8 +94,17 @@ struct SetGame<Content: Equatable> {
         setIDs()
         score = 0
         self.deck = backupDeck
-        for _ in 0..<12 {
+        for i in 0..<12 {
             cardsInPlay.append(deck.remove(at: 0))
+            cardsInPlay[i].isFlipped = true
+        }
+    }
+    
+    mutating func flipDealtCards() {
+        for i in 0..<cardsInPlay.count {
+            if !cardsInPlay[i].isFlipped {
+                cardsInPlay[i].isFlipped = true
+            }
         }
     }
     
@@ -118,6 +127,7 @@ struct SetGame<Content: Equatable> {
     struct Card: Identifiable, Equatable {
         let content: Content
         var isSelected = false
+        var isFlipped = false
         var matchingState = MatchingState.isNotInMatch
         
         var id: Int

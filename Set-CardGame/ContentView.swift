@@ -11,6 +11,8 @@ private let cardAspectRatio: CGFloat = 2.0/3.0
 
 struct ContentView: View {
     @ObservedObject var setGame: VanillaSetGame
+    @Namespace private var dealingNamespace
+    @Namespace private var discardNamespace
     
     var body: some View {
         VStack {
@@ -23,7 +25,6 @@ struct ContentView: View {
             HStack{
                 newGameButton
                 Spacer()
-                dealCardButton
             }
         }
         .padding()
@@ -37,25 +38,26 @@ struct ContentView: View {
         }
     }
     
-    private var dealCardButton: some View {
-        Button {
-            setGame.dealCards()
-        } label: {
-            Text("Deal 3 Cards")
-        }.disabled(setGame.deck.count == 0)
-    }
     
     var cards: some View {
-        AspectVGrid(setGame.cardsInPlay, aspectRatio: cardAspectRatio) {card in
-            CardView(content: card.content, card: card)
-                .aspectRatio(cardAspectRatio, contentMode: .fit)
-                .padding(4)
-                .overlay{
-                    MatchIndicator(matchState: card.matchingState)
-                }
-                .onTapGesture {
-                    setGame.choose(card)
-                }
+        withAnimation {
+            AspectVGrid(setGame.cardsInPlay, aspectRatio: cardAspectRatio) {card in
+                CardView(content: card.content, card: card)
+                    .aspectRatio(cardAspectRatio, contentMode: .fit)
+                    .padding(4)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                    .matchedGeometryEffect(id: card.id, in: discardNamespace)
+                    .transition(.asymmetric(insertion: .identity, removal: .identity))
+                    .overlay{
+                        MatchIndicator(matchState: card.matchingState)
+                    }
+                    .onTapGesture {
+                        withAnimation{
+                            setGame.choose(card)
+                        }
+                    }
+                    
+            }
         }
     }
     
@@ -67,8 +69,12 @@ struct ContentView: View {
                     CardView(content: card.content, card:card)
                         .aspectRatio(cardAspectRatio, contentMode: .fit)
                         .offset(y: CGFloat(i))
+                        .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                        .transition(.asymmetric(insertion: .identity, removal: .identity))
                         .scaleEffect(0.4)
-                    ExecuteCode({i -= 1})
+                }
+                .onTapGesture {
+                    deal()
                 }
             } else {
                 Color.clear
@@ -76,7 +82,17 @@ struct ContentView: View {
                     .scaleEffect(0.4)
             }
         }
+        
     }
+    
+    func deal() {
+        withAnimation(.easeInOut(duration:0.5)){
+            setGame.dealCards()
+            setGame.flipDealtCards()
+        }
+    }
+    
+    
     
     var discardDeck: some View {
         var i = 0.0
@@ -87,6 +103,8 @@ struct ContentView: View {
                         .aspectRatio(cardAspectRatio, contentMode: .fit)
                         .offset(y: CGFloat(i))
                         .scaleEffect(0.4)
+                        .matchedGeometryEffect(id: card.id, in: discardNamespace)
+                        .transition(.asymmetric(insertion: .identity, removal: .identity))
                     ExecuteCode({i -= 1})
                 }
             } else {

@@ -19,6 +19,10 @@ struct MatchIndicator: View {
         if matchState == MatchingState.isMatched {
             Image(systemName: "checkmark.circle.fill")
                 .foregroundStyle(.green)
+                .background(
+                    Circle()
+                        .foregroundStyle(.white)
+                )
                 .scaleEffect(scale)
                 .background {
                     Image(systemName: "rays")

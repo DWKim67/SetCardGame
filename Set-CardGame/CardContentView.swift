@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CardContentView: View {
     
-    private let colors = ["red": Color.red, "green": Color.green, "purple": Color.purple]
+    private let colors = ["blue": Color.blue, "green": Color.green, "purple": Color.purple]
     private let shapes: [String: AnyShape] = ["diamond": AnyShape(Rectangle()), "squiggle": AnyShape(Capsule()), "oval": AnyShape(Ellipse())]
     private let shadings = ["solid", "striped", "open"]
 
@@ -33,7 +33,7 @@ struct CardContentView: View {
                     .stroke(colors[content.color]!, lineWidth:
                                 (content.shading == "open") ? 2 : 0)
                     .aspectRatio(shapeAspectRatio, contentMode: .fit)
-                    .frame(width: geometry.size.width * 0.8 ,height: geometry.size.height * 0.7 / CGFloat(num) )
+                    .frame(width: geometry.size.width * 0.8 ,height: geometry.size.height * 0.7 / CGFloat(3) )
             }
         }
     }

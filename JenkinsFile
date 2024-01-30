@@ -1,0 +1,12 @@
+pipeline {
+
+	stages {
+		stage("Make ipa") {
+			sh 'fastlane build_sample_app'
+		}
+
+		stage("Upload ipa to appcenter") {
+			sh 'fastlane upload_to_appcenter'
+		}
+	}
+}

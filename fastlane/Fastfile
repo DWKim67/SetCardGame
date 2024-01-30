@@ -27,5 +27,28 @@ platform :ios do
     gym(export_method: "development")
   end
 
+  desc "Upload to app center"
+    lane :upload_to_appcenter do
+    UI.important "IPA File: #{Actions.lane_context[SharedValues::IPA_OUTPUT_PATH]}"
+    appcenter_upload(
+      api_token: "daad3ad56e282ab21257a90f04f86518d0e2f767",
+      owner_name: "dkim67",
+      owner_type: "user",
+      app_name: "Memorize",
+      file: Actions.lane_context[SharedValues::IPA_OUTPUT_PATH],
+      destinations: "*",
+      notify_testers: false,
+      upload_build_only: true
+    )
+  end
+
+  desc "Build and upload app to app center"
+    lane :build_and_upload_app do
+    build_sample_app
+    upload_to_appcenter
+    
+  end
+
+
 
 end
